@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<AssemblyName>UsingMongo.Application.Services</AssemblyName>
+		<RootNamespace>UsingMongo.Application.Services</RootNamespace>
+		<Configurations>Debug;Release;Development</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+		<OutputPath>bin\$(Configuration)\$(TargetFramework)\</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Data\Data.Repository.MongoDb\Data.Repository.MongoDb.csproj" />
+		<ProjectReference Include="..\Application.Dto\Application.Dto.csproj" />
+	</ItemGroup>
+</Project>
