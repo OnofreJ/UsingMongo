@@ -6,9 +6,9 @@
 
 	public interface ICustomerService
 	{
-		Task<Customer> CreateAsync(Customer customer);
+		Task CreateAsync(Customer customer);
 
-		Task<IEnumerable<Customer>> CreateAsync(IEnumerable<Customer> customers);
+		Task CreateAsync(IEnumerable<Customer> customers);
 
 		Task<Customer> GetAsync(string id);
 

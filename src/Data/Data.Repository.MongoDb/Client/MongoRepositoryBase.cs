@@ -1,100 +1,115 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Driver;
-
-namespace UsingMongo.Data.Repository.MongoDb.Client
+﻿namespace UsingMongo.Data.Repository.MongoDb.Client
 {
+	using System.Collections.Generic;
+	using System.Threading.Tasks;
+	using MongoDB.Bson;
+	using MongoDB.Driver;
+
+	/// <summary>
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	internal abstract class MongoRepositoryBase<T> where T : class, new()
 	{
-		protected readonly IMongoDatabase MongoDatabase;
-		private readonly string MongoCollectionName;
+		private readonly IMongoCollection<T> mongoCollection;
+		private readonly IMongoDatabase mongoDatabase;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MongoRepositoryBase{T}"/> class.
+		/// </summary>
+		/// <param name="mongoDatabaseClient">The mongo database client.</param>
+		/// <param name="mongoCollectionName">Name of the mongo collection.</param>
 		public MongoRepositoryBase(IMongoDatabaseClient mongoDatabaseClient, string mongoCollectionName)
 		{
-			MongoCollectionName = mongoCollectionName;
-			MongoDatabase = mongoDatabaseClient.CreateDatabase();
+			mongoDatabase = mongoDatabaseClient.CreateDatabase();
+			mongoCollection = mongoDatabase.GetCollection<T>(mongoCollectionName);
 		}
 
+		/// <summary>
+		/// Deletes the asynchronous.
+		/// </summary>
+		/// <param name="filter">The filter.</param>
+		/// <returns></returns>
 		protected internal virtual async Task<long> DeleteAsync(FilterDefinition<T> filter)
 		{
-			var result = await MongoDatabase
-				.GetCollection<T>(MongoCollectionName)
-				.DeleteManyAsync(filter);
+			var result = await mongoCollection.DeleteManyAsync(filter).ConfigureAwait(false);
 
 			return result.DeletedCount;
 		}
 
+		/// <summary>
+		/// Finds the asynchronous.
+		/// </summary>
+		/// <param name="filter">The filter.</param>
+		/// <returns></returns>
 		protected internal virtual async Task<T> FindAsync(FilterDefinition<T> filter)
 		{
-			var result = await MongoDatabase
-				.GetCollection<T>(MongoCollectionName)
-				.Find(filter)
-				.Limit(1)
-				.FirstOrDefaultAsync();
+			var result = await mongoCollection.Find(filter).Limit(1).FirstOrDefaultAsync().ConfigureAwait(false);
 
 			return result;
 		}
 
-		protected internal virtual async Task<IEnumerable<T>> GetAsync()
+		/// <summary>
+		/// Gets the asynchronous.
+		/// </summary>
+		/// <returns></returns>
+		protected internal virtual async Task<IEnumerable<T>> FindAsync()
 		{
-			var result = await MongoDatabase
-				.GetCollection<T>(MongoCollectionName)
-				.Find(filter => true)
-				.ToListAsync();
+			var result = await mongoCollection.Find(filter => true).ToListAsync().ConfigureAwait(false);
 
 			return result;
 		}
 
-		protected internal virtual async Task<IEnumerable<T>> GetAsync(FilterDefinition<T> filter)
+		///// <summary>
+		///// Gets the asynchronous.
+		///// </summary>
+		///// <param name="filter">The filter.</param>
+		///// <returns></returns>
+		//protected internal virtual async Task<IEnumerable<T>> FindAsync(FilterDefinition<T> filter)
+		//{
+		//	var result = await mongoCollection.Find(filter).ToListAsync().ConfigureAwait(false);
+
+		//	return result;
+		//}
+
+		/// <summary>
+		/// Gets the asynchronous.
+		/// </summary>
+		/// <param name="filter">The filter.</param>
+		/// <param name="projection">The projection.</param>
+		/// <returns></returns>
+		protected internal virtual async Task<BsonDocument> FindAsync(FilterDefinition<T> filter, ProjectionDefinition<T> projection)
 		{
-			var result = await MongoDatabase
-				.GetCollection<T>(MongoCollectionName)
-				.Find(filter)
-				.ToListAsync();
+			var result = await mongoCollection.Find(filter).Project(projection).SingleOrDefaultAsync().ConfigureAwait(false);
 
 			return result;
 		}
 
-		protected internal virtual async Task<BsonDocument> GetAsync(FilterDefinition<T> filter, ProjectionDefinition<T> projection)
+		/// <summary>
+		/// Inserts the asynchronous.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		protected internal virtual async Task InsertAsync(T value)
 		{
-			var result = await MongoDatabase
-				.GetCollection<T>(MongoCollectionName)
-				.Find(filter)
-				.Project(projection)
-				.SingleOrDefaultAsync();
-
-			return result;
+			await mongoCollection.InsertOneAsync(value).ConfigureAwait(false);
 		}
 
-		protected internal virtual async Task<T> InsertAsync(T value)
+		/// <summary>
+		/// Inserts the asynchronous.
+		/// </summary>
+		/// <param name="values">The values.</param>
+		protected internal virtual async Task InsertAsync(IEnumerable<T> values)
 		{
-			await MongoDatabase
-				.GetCollection<T>(MongoCollectionName)
-				.InsertOneAsync(value);
-
-			return value;
+			await mongoCollection.InsertManyAsync(values).ConfigureAwait(false);
 		}
 
-		protected internal virtual async Task<IEnumerable<T>> InsertAsync(IEnumerable<T> values)
-		{
-			await MongoDatabase
-				.GetCollection<T>(MongoCollectionName)
-				.InsertManyAsync(values);
-
-			return values;
-		}
-
+		/// <summary>
+		/// Updates the property asynchronous.
+		/// </summary>
+		/// <param name="filter">The filter.</param>
+		/// <param name="update">The update.</param>
 		protected internal virtual async Task UpdatePropertyAsync(FilterDefinition<T> filter, UpdateDefinition<T> update)
 		{
-			var options = new UpdateOptions
-			{
-				IsUpsert = true
-			};
-
-			await MongoDatabase
-				.GetCollection<T>(MongoCollectionName)
-				.UpdateOneAsync(filter, update, options);
+			await mongoCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
 		}
 	}
 }

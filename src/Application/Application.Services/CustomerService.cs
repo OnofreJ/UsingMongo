@@ -4,32 +4,37 @@
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
 	using UsingMongo.Application.Dto;
+	using UsingMongo.Application.Services.Mappers;
 	using UsingMongo.Data.Repository.MongoDb.Repositories;
 
 	internal sealed class CustomerService : ICustomerService
 	{
 		private readonly ICustomerRepository customerRepository;
+		private readonly ICustomerServiceMapper customerServiceMapper;
 
-		public CustomerService(ICustomerRepository customerRepository)
+		public CustomerService(ICustomerRepository customerRepository, ICustomerServiceMapper customerServiceMapper)
 		{
 			this.customerRepository = customerRepository;
+			this.customerServiceMapper = customerServiceMapper;
 		}
 
-		public async Task<Customer> CreateAsync(Customer customer)
+		public async Task CreateAsync(Customer customer)
 		{
-			var result = await customerRepository.CreateAsync(new Data.Repository.MongoDb.Model.Customer { Id = customer.Id, Name = customer.Name }).ConfigureAwait(false);
+			var model = customerServiceMapper.MapToModel(customer);
 
-			return new Customer { Id = result.Id, Name = result.Name };
+			await customerRepository.CreateAsync(model).ConfigureAwait(false);
 		}
 
-		public Task<IEnumerable<Customer>> CreateAsync(IEnumerable<Customer> customers)
-		{
-			throw new NotImplementedException();
-		}
-
-		public Task<Customer> GetAsync(string id)
+		public Task CreateAsync(IEnumerable<Customer> customers)
 		{
 			throw new NotImplementedException();
+		}
+
+		public async Task<Customer> GetAsync(string id)
+		{
+			var model = await customerRepository.GetAsync(id).ConfigureAwait(false);
+
+			return customerServiceMapper.MapToDto(model);
 		}
 
 		public Task<IEnumerable<Customer>> GetAsync()
