@@ -1,5 +1,6 @@
 ﻿namespace UsingMongo.Presentation.Api.Controllers
 {
+	using System.Collections.Generic;
 	using System.Threading.Tasks;
 	using Microsoft.AspNetCore.Mvc;
 	using UsingMongo.Application.Dto;
@@ -28,10 +29,22 @@
 		/// </summary>
 		/// <param name="id">The identifier.</param>
 		/// <returns></returns>
-		[HttpGet]
-		public async Task<IActionResult> Get([FromQuery] string id)
+		[HttpGet("{id}")]
+		public async Task<ActionResult<Customer>> Get(string id)
 		{
 			var result = await customerService.GetAsync(id).ConfigureAwait(false);
+
+			return Ok(result);
+		}
+
+		/// <summary>
+		/// Gets the specified identifier.
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		public async Task<ActionResult<IEnumerable<Customer>>> Get()
+		{
+			var result = await customerService.GetAsync().ConfigureAwait(false);
 
 			return Ok(result);
 		}

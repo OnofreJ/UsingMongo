@@ -37,9 +37,11 @@
 			return customerServiceMapper.MapToDto(model);
 		}
 
-		public Task<IEnumerable<Customer>> GetAsync()
+		public async Task<IEnumerable<Customer>> GetAsync()
 		{
-			throw new NotImplementedException();
+			var model = await customerRepository.GetAsync().ConfigureAwait(false);
+
+			return customerServiceMapper.MapToDto(model);
 		}
 
 		public Task RemoveAllAsync()

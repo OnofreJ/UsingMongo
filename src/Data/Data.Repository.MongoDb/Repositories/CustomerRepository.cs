@@ -46,7 +46,7 @@
 
 		public Task<IEnumerable<Customer>> GetAsync()
 		{
-			throw new System.NotImplementedException();
+			return FindAsync();
 		}
 
 		public Task RemoveAsync(string id)
