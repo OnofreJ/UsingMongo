@@ -2,7 +2,6 @@
 {
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
-	using MongoDB.Bson;
 	using MongoDB.Driver;
 
 	/// <summary>
@@ -31,7 +30,7 @@
 		/// <returns></returns>
 		protected internal virtual async Task<long> DeleteAsync(FilterDefinition<T> filter)
 		{
-			var result = await mongoCollection.DeleteManyAsync(filter).ConfigureAwait(false);
+			var result = await mongoCollection.DeleteOneAsync(filter).ConfigureAwait(false);
 
 			return result.DeletedCount;
 		}
@@ -41,45 +40,9 @@
 		/// </summary>
 		/// <param name="filter">The filter.</param>
 		/// <returns></returns>
-		protected internal virtual async Task<T> FindAsync(FilterDefinition<T> filter)
+		protected internal virtual async Task<IEnumerable<T>> FindAsync(FilterDefinition<T> filter)
 		{
-			var result = await mongoCollection.Find(filter).Limit(1).FirstOrDefaultAsync().ConfigureAwait(false);
-
-			return result;
-		}
-
-		/// <summary>
-		/// Gets the asynchronous.
-		/// </summary>
-		/// <returns></returns>
-		protected internal virtual async Task<IEnumerable<T>> FindAsync()
-		{
-			var result = await mongoCollection.Find(filter => true).ToListAsync().ConfigureAwait(false);
-
-			return result;
-		}
-
-		///// <summary>
-		///// Gets the asynchronous.
-		///// </summary>
-		///// <param name="filter">The filter.</param>
-		///// <returns></returns>
-		//protected internal virtual async Task<IEnumerable<T>> FindAsync(FilterDefinition<T> filter)
-		//{
-		//	var result = await mongoCollection.Find(filter).ToListAsync().ConfigureAwait(false);
-
-		//	return result;
-		//}
-
-		/// <summary>
-		/// Gets the asynchronous.
-		/// </summary>
-		/// <param name="filter">The filter.</param>
-		/// <param name="projection">The projection.</param>
-		/// <returns></returns>
-		protected internal virtual async Task<BsonDocument> FindAsync(FilterDefinition<T> filter, ProjectionDefinition<T> projection)
-		{
-			var result = await mongoCollection.Find(filter).Project(projection).SingleOrDefaultAsync().ConfigureAwait(false);
+			var result = await mongoCollection.Find(filter).ToListAsync().ConfigureAwait(false);
 
 			return result;
 		}
@@ -103,13 +66,13 @@
 		}
 
 		/// <summary>
-		/// Updates the property asynchronous.
+		/// Updates the asynchronous.
 		/// </summary>
 		/// <param name="filter">The filter.</param>
-		/// <param name="update">The update.</param>
-		protected internal virtual async Task UpdatePropertyAsync(FilterDefinition<T> filter, UpdateDefinition<T> update)
+		/// <param name="value">The value.</param>
+		protected internal virtual async Task UpdateAsync(FilterDefinition<T> filter, T value)
 		{
-			await mongoCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+			await mongoCollection.ReplaceOneAsync(filter, value, new ReplaceOptions { IsUpsert = true });
 		}
 	}
 }

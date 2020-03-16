@@ -18,6 +18,6 @@
 
 		Task RemoveAsync(string id);
 
-		Task UpdateAsync(Customer customer);
+		Task ModifyAsync(Customer customer);
 	}
 }

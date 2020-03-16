@@ -44,19 +44,21 @@
 			return customerServiceMapper.MapToDto(model);
 		}
 
+		public async Task ModifyAsync(Customer customer)
+		{
+			var model = customerServiceMapper.MapToModel(customer);
+
+			await customerRepository.ModifyAsync(model).ConfigureAwait(false);
+		}
+
 		public Task RemoveAllAsync()
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task RemoveAsync(string id)
+		public async Task RemoveAsync(string id)
 		{
-			throw new NotImplementedException();
-		}
-
-		public Task UpdateAsync(Customer customer)
-		{
-			throw new NotImplementedException();
+			await customerRepository.RemoveAsync(id).ConfigureAwait(false);
 		}
 	}
 }

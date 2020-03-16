@@ -36,17 +36,17 @@
 		Task<IEnumerable<Customer>> GetAsync();
 
 		/// <summary>
+		/// Modifies the asynchronous.
+		/// </summary>
+		/// <param name="customer">The customer.</param>
+		/// <returns></returns>
+		Task ModifyAsync(Customer customer);
+
+		/// <summary>
 		/// Removes the asynchronous.
 		/// </summary>
 		/// <param name="id">The identifier.</param>
 		/// <returns></returns>
 		Task RemoveAsync(string id);
-
-		/// <summary>
-		/// Updates the asynchronous.
-		/// </summary>
-		/// <param name="customer">The customer.</param>
-		/// <returns></returns>
-		Task UpdateAsync(Customer customer);
 	}
 }

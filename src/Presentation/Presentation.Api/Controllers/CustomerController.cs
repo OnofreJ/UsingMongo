@@ -25,12 +25,25 @@
 		}
 
 		/// <summary>
+		/// Creates the asynchronous.
+		/// </summary>
+		/// <param name="customer">The customer.</param>
+		/// <returns></returns>
+		[HttpPost]
+		public async Task<IActionResult> CreateAsync([FromBody] Customer customer)
+		{
+			await customerService.CreateAsync(customer).ConfigureAwait(false);
+
+			return Ok();
+		}
+
+		/// <summary>
 		/// Gets the specified identifier.
 		/// </summary>
 		/// <param name="id">The identifier.</param>
 		/// <returns></returns>
 		[HttpGet("{id}")]
-		public async Task<ActionResult<Customer>> Get(string id)
+		public async Task<ActionResult<Customer>> GetAsync(string id)
 		{
 			var result = await customerService.GetAsync(id).ConfigureAwait(false);
 
@@ -42,7 +55,7 @@
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Customer>>> Get()
+		public async Task<ActionResult<IEnumerable<Customer>>> GetAsync()
 		{
 			var result = await customerService.GetAsync().ConfigureAwait(false);
 
@@ -50,14 +63,27 @@
 		}
 
 		/// <summary>
-		/// Posts the specified customer.
+		/// Updates the asynchronous.
 		/// </summary>
 		/// <param name="customer">The customer.</param>
 		/// <returns></returns>
-		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] Customer customer)
+		[HttpPut]
+		public async Task<ActionResult<IEnumerable<Customer>>> ModifyAsync([FromBody] Customer customer)
 		{
-			await customerService.CreateAsync(customer).ConfigureAwait(false);
+			await customerService.ModifyAsync(customer).ConfigureAwait(false);
+
+			return Ok();
+		}
+
+		/// <summary>
+		/// Removes the asynchronous.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns></returns>
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> RemoveAsync(string id)
+		{
+			await customerService.RemoveAsync(id).ConfigureAwait(false);
 
 			return Ok();
 		}
