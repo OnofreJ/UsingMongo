@@ -34,7 +34,7 @@
 		{
 			await customerService.CreateAsync(customer).ConfigureAwait(false);
 
-			return Ok();
+			return CreatedAtRoute("GetAsync", new { id = customer.Id }, customer);
 		}
 
 		/// <summary>
@@ -42,10 +42,15 @@
 		/// </summary>
 		/// <param name="id">The identifier.</param>
 		/// <returns></returns>
-		[HttpGet("{id}")]
+		[HttpGet("{id}", Name = "GetAsync")]
 		public async Task<ActionResult<Customer>> GetAsync(string id)
 		{
 			var result = await customerService.GetAsync(id).ConfigureAwait(false);
+
+			if (result == null)
+			{
+				return NotFound();
+			}
 
 			return Ok(result);
 		}
