@@ -31,11 +31,6 @@
 			await InsertAsync(customer).ConfigureAwait(false);
 		}
 
-		public async Task CreateAsync(IEnumerable<Customer> customers)
-		{
-			await InsertAsync(customers).ConfigureAwait(false);
-		}
-
 		public async Task<Customer> GetAsync(string id)
 		{
 			var filter = Builders<Customer>.Filter.Eq(field => field.Id, id);

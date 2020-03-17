@@ -5,48 +5,42 @@
 	using Data.Repository.MongoDb.Model;
 
 	/// <summary>
+	/// Defines the implementation to the customer repository.
 	/// </summary>
 	public interface ICustomerRepository
 	{
 		/// <summary>
-		/// Creates the asynchronous.
+		/// Represents the method definition to create a single customer.
 		/// </summary>
 		/// <param name="customer">The customer.</param>
-		/// <returns></returns>
+		/// <returns>A <see cref="Task"/>.</returns>
 		Task CreateAsync(Customer customer);
 
 		/// <summary>
-		/// Creates the asynchronous.
+		/// Represents the method definition to get a single customer.
 		/// </summary>
-		/// <param name="customers">The customers.</param>
-		/// <returns></returns>
-		Task CreateAsync(IEnumerable<Customer> customers);
-
-		/// <summary>
-		/// Gets the asynchronous.
-		/// </summary>
-		/// <param name="id">The identifier.</param>
-		/// <returns></returns>
+		/// <param name="id">The customer identifier.</param>
+		/// <returns>A <see cref="Customer"/> object.</returns>
 		Task<Customer> GetAsync(string id);
 
 		/// <summary>
-		/// Gets the asynchronous.
+		/// Represents the method definition to get a list of customers.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>A <see cref="IEnumerable{Customer}"/> object.</returns>
 		Task<IEnumerable<Customer>> GetAsync();
 
 		/// <summary>
-		/// Modifies the asynchronous.
+		/// Represents the method definition to modify a single customer.
 		/// </summary>
 		/// <param name="customer">The customer.</param>
-		/// <returns></returns>
+		/// <returns>A <see cref="Task"/>.</returns>
 		Task ModifyAsync(Customer customer);
 
 		/// <summary>
-		/// Removes the asynchronous.
+		/// Represents the method definition to remove a single customer.
 		/// </summary>
-		/// <param name="id">The identifier.</param>
-		/// <returns></returns>
+		/// <param name="id">The customer identifier.</param>
+		/// <returns>A <see cref="Task"/>.</returns>
 		Task RemoveAsync(string id);
 	}
 }

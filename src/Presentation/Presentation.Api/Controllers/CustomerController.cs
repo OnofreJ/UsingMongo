@@ -7,6 +7,7 @@
 	using UsingMongo.Application.Services;
 
 	/// <summary>
+	/// Re
 	/// </summary>
 	/// <seealso cref="ControllerBase"/>
 	[Route("api/customer")]
