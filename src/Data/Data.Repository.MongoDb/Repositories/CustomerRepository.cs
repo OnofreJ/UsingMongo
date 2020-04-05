@@ -8,6 +8,7 @@
 	using UsingMongo.Data.Repository.MongoDb.Model;
 
 	/// <summary>
+	/// Represents the class with the implementation to the customer repository.
 	/// </summary>
 	/// <seealso cref="MongoRepositoryBase{Customer}"/>
 	/// <seealso cref="ICustomerRepository"/>
@@ -26,11 +27,20 @@
 		{
 		}
 
+		/// <summary>
+		/// Create a single customer in the repository.
+		/// </summary>
+		/// <param name="customer">The customer.</param>
 		public async Task CreateAsync(Customer customer)
 		{
 			await InsertAsync(customer).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		/// Gets a single customer from the repository.
+		/// </summary>
+		/// <param name="id">The customer identifier.</param>
+		/// <returns>A <see cref="Customer"/> object.</returns>
 		public async Task<Customer> GetAsync(string id)
 		{
 			var filter = Builders<Customer>.Filter.Eq(field => field.Id, id);
@@ -40,6 +50,10 @@
 			return result.FirstOrDefault();
 		}
 
+		/// <summary>
+		/// Gets a list of customers from the repository.
+		/// </summary>
+		/// <returns>A <see cref="IEnumerable{Customer}"/> object.</returns>
 		public async Task<IEnumerable<Customer>> GetAsync()
 		{
 			var filter = Builders<Customer>.Filter.Empty;
@@ -47,6 +61,11 @@
 			return await FindAsync(filter);
 		}
 
+		/// <summary>
+		/// Modify a single customer in the repository.
+		/// </summary>
+		/// <param name="customer">The customer.</param>
+		/// <returns>A <see cref="Task"/>.</returns>
 		public async Task ModifyAsync(Customer customer)
 		{
 			var filter = Builders<Customer>.Filter.Eq(field => field.Id, customer.Id);
@@ -54,6 +73,11 @@
 			await UpdateAsync(filter, customer).ConfigureAwait(false);
 		}
 
+		/// <summary>
+		/// Remove a single customer in the repository.
+		/// </summary>
+		/// <param name="id">The customer identifier.</param>
+		/// <returns>A <see cref="Task"/>.</returns>
 		public async Task RemoveAsync(string id)
 		{
 			var filter = Builders<Customer>.Filter.Eq(field => field.Id, id);

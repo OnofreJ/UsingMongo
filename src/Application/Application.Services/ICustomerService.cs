@@ -14,10 +14,10 @@
 
 		Task<IEnumerable<Customer>> GetAsync();
 
+		Task ModifyAsync(Customer customer);
+
 		Task RemoveAllAsync();
 
 		Task RemoveAsync(string id);
-
-		Task ModifyAsync(Customer customer);
 	}
 }

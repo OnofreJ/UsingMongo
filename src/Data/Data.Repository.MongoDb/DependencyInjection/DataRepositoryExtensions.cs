@@ -8,8 +8,16 @@
 	using UsingMongo.Data.Repository.MongoDb.Mappings;
 	using UsingMongo.Data.Repository.MongoDb.Repositories;
 
+	/// <summary>
+	/// </summary>
 	public static class DataRepositoryExtensions
 	{
+		/// <summary>
+		/// Adds the mongo database.
+		/// </summary>
+		/// <param name="services">The services.</param>
+		/// <param name="configureSettings">The configure settings.</param>
+		/// <returns></returns>
 		public static IServiceCollection AddMongoDb(this IServiceCollection services, Action<MongoDbSettings> configureSettings)
 		{
 			var mongoDbSettings = new MongoDbSettings();
@@ -33,6 +41,11 @@
 			return services;
 		}
 
+		/// <summary>
+		/// Adds the data repositories.
+		/// </summary>
+		/// <param name="services">The services.</param>
+		/// <returns></returns>
 		private static IServiceCollection AddDataRepositories(this IServiceCollection services)
 		{
 			services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -40,6 +53,12 @@
 			return services;
 		}
 
+		/// <summary>
+		/// Adds the mongo client.
+		/// </summary>
+		/// <param name="services">The services.</param>
+		/// <param name="mongoDbSettings">The mongo database settings.</param>
+		/// <returns></returns>
 		private static IServiceCollection AddMongoClient(this IServiceCollection services, MongoDbSettings mongoDbSettings)
 		{
 			services.AddSingleton<IMongoClient>(serviceProvider =>
