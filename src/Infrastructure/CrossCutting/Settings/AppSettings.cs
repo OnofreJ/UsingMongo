@@ -1,8 +1,5 @@
 ﻿namespace UsingMongo.Infrastructure.CrossCutting.Settings
 {
-	/// <summary>
-	/// This class represents the settings used in the application.
-	/// </summary>
 	public class AppSettings
 	{
 		/// <summary>
@@ -24,7 +21,7 @@
 		public string HttpClientUserAgent { get; set; }
 
 		/// <summary>
-		/// Gets or sets the service port.
+		/// Gets or sets the serive port.
 		/// </summary>
 		/// <value>The service port.</value>
 		public int Port { get; set; }
