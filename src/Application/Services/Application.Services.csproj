@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<AssemblyName>UsingMongo.Application.Services</AssemblyName>
+		<RootNamespace>UsingMongo.Application.Services</RootNamespace>
+		<Configurations>Debug;Release;Development</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+		<OutputPath>bin\$(Configuration)\$(TargetFramework)\</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Data\Repository\MongoDb\Data.Repository.MongoDb.csproj" />
+	  <ProjectReference Include="..\Dto\Application.Dto.csproj" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<AssemblyName>UsingMongo.Infrastructure.CrossCutting</AssemblyName>
+		<RootNamespace>UsingMongo.Infrastructure.CrossCutting</RootNamespace>
+		<Configurations>Debug;Release;Development</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+		<OutputPath>bin\$(Configuration)\$(TargetFramework)\</OutputPath>
+	</PropertyGroup>
+</Project>

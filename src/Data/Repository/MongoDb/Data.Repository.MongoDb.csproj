@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<AssemblyName>UsingMongo.Data.Repository.MongoDb</AssemblyName>
+		<RootNamespace>UsingMongo.Data.Repository.MongoDb</RootNamespace>
+		<Configurations>Debug;Release;Development</Configurations>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+		<OutputPath>bin\$(Configuration)\$(TargetFramework)\</OutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.4" />
+	  <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
+	</ItemGroup>
+</Project>
