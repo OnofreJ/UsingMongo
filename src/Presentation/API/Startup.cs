@@ -49,7 +49,7 @@
 
 			services.AddControllers(options =>
 			{
-				options.Filters.Add(new HttpResponseExceptionFilter());
+				options.Filters.Add(new ExceptionFilter());
 				options.Filters.Add(new ModelStateActionFilter());
 			});
 

@@ -9,6 +9,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Responses\**" />
+	  <Content Remove="Responses\**" />
+	  <EmbeddedResource Remove="Responses\**" />
+	  <None Remove="Responses\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="5.4.1" />
 	</ItemGroup>
 
@@ -16,9 +23,5 @@
 		<ProjectReference Include="..\..\Application\Services\Application.Services.csproj" />
 		<ProjectReference Include="..\..\Data\Repository\MongoDb\Data.Repository.MongoDb.csproj" />
 		<ProjectReference Include="..\..\Infrastructure\CrossCutting\Infrastructure.CrossCutting.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Responses\" />
 	</ItemGroup>
 </Project>

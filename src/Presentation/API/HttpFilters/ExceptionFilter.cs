@@ -7,7 +7,7 @@ using UsingMongo.Infrastructure.CrossCutting.Responses;
 
 namespace UsingMongo.Presentation.API.HttpFilters
 {
-	public class HttpResponseExceptionFilter : IExceptionFilter
+	public class ExceptionFilter : IExceptionFilter
 	{
 		public void OnException(ExceptionContext context)
 		{

@@ -11,12 +11,12 @@ namespace UsingMongo.Infrastructure.CrossCutting.Responses
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Response{T}"/> class.
 		/// </summary>
-		/// <param name="entries">The entries.</param>
+		/// <param name="result">The result.</param>
 		/// <param name="errorMessages">The error messages.</param>
 		/// <param name="messages">The messages.</param>
-		public Response(T entries, IEnumerable<string> errorMessages, IEnumerable<string> messages)
+		public Response(T result, IEnumerable<string> errorMessages, IEnumerable<string> messages)
 		{
-			Result = entries;
+			Result = result;
 			ErrorMessages = errorMessages ?? Enumerable.Empty<string>();
 			Messages = messages ?? Enumerable.Empty<string>();
 		}
@@ -24,10 +24,10 @@ namespace UsingMongo.Infrastructure.CrossCutting.Responses
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Response{T}"/> class.
 		/// </summary>
-		/// <param name="entries">The entries.</param>
-		public Response(T entries)
+		/// <param name="result">The result.</param>
+		public Response(T result)
 		{
-			Result = entries;
+			Result = result;
 			ErrorMessages = Enumerable.Empty<string>();
 			Messages = Enumerable.Empty<string>();
 		}
